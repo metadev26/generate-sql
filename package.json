@@ -1,5 +1,5 @@
 {
-  "name": "sql-query-generator",
+  "name": "generate-sql",
   "version": "1.4.2",
   "description": "A schemaless sql query builder.",
   "main": "dist/index.js",
@@ -19,12 +19,12 @@
     "update",
     "generate"
   ],
-  "author": "Vincent Bedard",
+  "author": "Metadev26",
   "license": "MIT",
-  "homepage": "https://github.com/vedard/sql-query-generator",
+  "homepage": "https://github.com/metadev26/generate-sql",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vedard/sql-query-generator.git"
+    "url": "https://github.com/metadev26/generate-sql.git"
   },
   "dependencies": {},
   "devDependencies": {

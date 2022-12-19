@@ -21,8 +21,10 @@ export function select(table: string, columns: string | string[]) {
 
 
 export function insert(table: string, fields: Object) {
+    console.log({fields})
     let columns = Object.keys(fields)
-    let values = Object.values(fields).map((v, k) => `$${k + 1}`);
+    let values = Object.values(fields).map((v, k) => `${v}`);
+    console.log({values})
     let statement = Statement.fromFactory(current_dialect);
     statement.operation = "INSERT";
     statement.table = table;
