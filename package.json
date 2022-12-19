@@ -1,6 +1,6 @@
 {
   "name": "generate-sql",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "A schemaless sql query builder.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

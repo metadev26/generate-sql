@@ -21,25 +21,26 @@ export function select(table: string, columns: string | string[]) {
 
 
 export function insert(table: string, fields: Object) {
-    console.log({fields})
     let columns = Object.keys(fields)
     let values = Object.values(fields).map((v, k) => `${v}`);
-    console.log({values})
+    let refactorValue="'"+values.join("','")+"'"
     let statement = Statement.fromFactory(current_dialect);
     statement.operation = "INSERT";
     statement.table = table;
     statement.values = Object.values(fields);
-    statement.text = `INSERT INTO ${table} (${columns.join(", ")}) VALUES (${values.join(", ")})`;
+    statement.text = `INSERT INTO ${table} (${columns.join(", ")}) VALUES (${refactorValue})`;
     return statement;
 }
 
 export function update(table: string, fields: Object) {
-    let columns = Object.keys(fields).map((v, k) => `${v} = $${k + 1}`);
+    let columns = Object.keys(fields)
+    let values = Object.values(fields).map((v, k) => `${columns[k]}='${v}'`);
+   // let refactorValue="'"+values.join("', '")+"'"
     let statement = Statement.fromFactory(current_dialect);
     statement.operation = "UPDATE";
     statement.table = table;
     statement.values = Object.values(fields);
-    statement.text = `UPDATE ${table} SET ${columns.join(", ")}`;
+    statement.text = `UPDATE ${table} SET ${values.join(", ")}`;
     return statement;
 }
 

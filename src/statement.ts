@@ -29,12 +29,12 @@ export abstract class Statement {
     }
 
     public where(fields: String | Object, operator: string = '=', separator: string = 'AND') {
+        let values = Object.values(fields)
         if (typeof(fields) == "string") {
             this.text += ` WHERE ${fields}`;
             return this;
         }
-
-        let expression = Object.keys(fields).map((v, k) => `${v} ${operator} $${k + this.values.length + 1}`);
+        let expression = Object.keys(fields).map((v, k) => `${v} ${operator} '${values[k]}'`);
         this.values = this.values.concat(Object.values(fields));
         
         if (expression.length > 1){

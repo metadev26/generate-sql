@@ -107,18 +107,18 @@ describe('SqlQueryGenerator', function () {
     describe('insert()', function () {
         it('Single Value', function () {
             let query = sql.insert("table", { f1: 2 });
-            assert.strictEqual(query.text, "INSERT INTO table (f1) VALUES ($1)");
+            assert.strictEqual(query.text, "INSERT INTO table (f1) VALUES ('2')");
             assert.deepStrictEqual(query.values, [2]);
         });
         it('Double Value', function () {
             let query = sql.insert("table", { f1: 2, f2: 'string' });
-            assert.strictEqual(query.text, "INSERT INTO table (f1, f2) VALUES ($1, $2)");
+            assert.strictEqual(query.text, "INSERT INTO table (f1, f2) VALUES ('2','string')");
             assert.deepStrictEqual(query.values, [2, 'string']);
         });
 
         it('with returning clause', function () {
             let query = sql.insert("table", { id: 1, title: "test" }).returning(["*"]);
-            assert.strictEqual(query.text, "INSERT INTO table (id, title) VALUES ($1, $2) RETURNING *");
+            assert.strictEqual(query.text, "INSERT INTO table (id, title) VALUES ('1','test') RETURNING *");
             assert.deepStrictEqual(query.values, [1, 'test']);
         });
     });
@@ -126,25 +126,25 @@ describe('SqlQueryGenerator', function () {
     describe('update()', function () {
         it('Single value', function () {
             let query = sql.update("table", { f1: 2 });
-            assert.strictEqual(query.text, "UPDATE table SET f1 = $1");
+            assert.strictEqual(query.text, "UPDATE table SET f1='2'");
             assert.deepStrictEqual(query.values, [2]);
         });
 
         it('Double value', function () {
             let query = sql.update("table", { f1: 2, f2: 'string' });
-            assert.strictEqual(query.text, "UPDATE table SET f1 = $1, f2 = $2");
+            assert.strictEqual(query.text, "UPDATE table SET f1='2', f2='string'");
             assert.deepStrictEqual(query.values, [2, 'string']);
         });
 
         it('single where', function () {
             let query = sql.update("table", { f1: 2, f2: 'string' }).where({ f3: 'asdf' });
-            assert.strictEqual(query.text, "UPDATE table SET f1 = $1, f2 = $2 WHERE f3 = $3");
+            assert.strictEqual(query.text, "UPDATE table SET f1='2', f2='string' WHERE f3 = 'asdf'");
             assert.deepStrictEqual(query.values, [2, 'string', 'asdf']);
         });
 
         it('Double where', function () {
             let query = sql.update("table", { f1: 2, f2: 'string' }).where({ f3: 'asdf', f4: 'asdf' });
-            assert.strictEqual(query.text, "UPDATE table SET f1 = $1, f2 = $2 WHERE (f3 = $3 AND f4 = $4)");
+            assert.strictEqual(query.text, "UPDATE table SET f1='2', f2='string' WHERE (f3 = 'asdf' AND f4 = 'asdf')");
             assert.deepStrictEqual(query.values, [2, 'string', 'asdf', 'asdf']);
         });
     });
